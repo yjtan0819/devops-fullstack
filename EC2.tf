@@ -3,11 +3,16 @@ provider "aws" {
 }
 
 resource "aws_instance" "devops-server" {
-    ami = "ami-08a0d1e16fc3f61ea"
+    ami = "ami-04b70fa74e45c3917"
     instance_type = "t2.micro"
     key_name = "devops-fullstack"
-    security_groups = ["${aws_security_group.devops-sg.name}"]
+    //security_groups = ["${aws_security_group.devops-sg.name}"]
+    vpc_security_group_ids = ["${aws_security_group.devops-sg.id}"]
     subnet_id = "${aws_subnet.devops-public-subnet-01.id}"
+    for_each = toset(["jenkins-master", "build-slave", "ansible"])
+    tags = {
+        Name = "${each.key}"
+    }
 }
 
 resource "aws_security_group" "devops-sg" {
