@@ -28,4 +28,3 @@
         name: jenkins
         state: started
         enabled: true
-
