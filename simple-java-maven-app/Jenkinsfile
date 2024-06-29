@@ -86,7 +86,7 @@ pipeline {
             steps {
                 script {
                     echo '<--------------- Helm Deploy Started --------------->'
-                    sh 'helm install simple-java-maven-app simple-java-maven-app-chart.tgz'
+                    sh 'helm install simple-java-maven-app simple-java-maven-app-1.0.tgz'
                     echo '<--------------- Helm deploy Ends --------------->'
                 }
             }
