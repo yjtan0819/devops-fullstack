@@ -1,0 +1,26 @@
+---
+- name: Install Jenkins Slave
+  hosts: jenkins-slave
+  become: true
+  tasks:
+    - name: Update ubuntu repo and cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install Java
+      ansible.builtin.apt:
+        name: openjdk-11-jdk
+        state: present
+
+    - name: Download Maven Packages
+      ansible.builtin.get_url:
+        url: https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
+        dest: /opt
+        mode: 755
+
+    - name: Extract Maven Package
+      ansible.builtin.unarchive:
+        src: /opt/apache-maven-3.8.1-bin.tar.gz
+        dest: /opt
+        remote_src: true
