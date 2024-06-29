@@ -81,5 +81,15 @@ pipeline {
                 }
             }
         }
+
+        stage(" Deploy using Helm") {
+            steps {
+                script {
+                    echo '<--------------- Helm Deploy Started --------------->'
+                    sh 'helm install simple-java-maven-app simple-java-maven-app-chart.tgz'
+                    echo '<--------------- Helm deploy Ends --------------->'
+                }
+            }
+        }
     }
 }

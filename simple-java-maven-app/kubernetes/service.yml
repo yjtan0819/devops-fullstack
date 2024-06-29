@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name:  devops-fullstack-service
+  namespace: devops-fullstack
+spec:
+  type: NodePort
+  selector:
+    app: devops-fullstack
+  ports:
+  - nodePort: 30082
+    port: 8000
+    targetPort: 8000
