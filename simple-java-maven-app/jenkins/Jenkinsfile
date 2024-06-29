@@ -47,5 +47,21 @@ pipeline {
                 }
             }
         }
+
+        stage('Upload to Jfrog Artifactory') {
+            steps {
+                script {
+                    def server = Artifactory.newServer url: 'https://yjtan0819.jfrog.io/', credentialsId: 'artifactory'
+                    def buildInfo = Artifactory.newBuildInfo()
+                    def rtMaven = Artifactory.newMavenBuild()
+                    rtMaven.tool = 'maven'
+                    rtMaven.deployer server: server, releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local'
+                    buildInfo.env.capture = true
+                    buildInfo.env.filter.addInclude('MAVEN_.*')
+                    rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
+                    server.publishBuildInfo buildInfo
+                }
+            }
+        }
     }
 }
