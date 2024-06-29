@@ -18,6 +18,7 @@ This project demonstrates the integration of various DevOps tools to create a co
 ## CI/CD Pipeline Flow
 
 1. **Code Development**: Sample Java and Maven project, committing code changes to a version control system
+
 2. **Infrastructure Provisioning with Terraform**:
 
    - Terraform scripts define the cloud infrastructure (AWS) required for deployment.
