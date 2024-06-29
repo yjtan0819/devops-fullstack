@@ -24,3 +24,19 @@
         src: /opt/apache-maven-3.8.1-bin.tar.gz
         dest: /opt
         remote_src: true
+
+    - name: Install Docker
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker Service
+      ansible.builtin.systemd:
+        name: docker
+        state: started
+
+    - name: Give 0777 permission to docker.sock
+      ansible.builtin.file:
+        path: /var/run/docker.sock
+        mode: '0777'
+        state: file

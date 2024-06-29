@@ -63,5 +63,23 @@ pipeline {
                 }
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                script {
+                    docker.build("yjtan0819/simple-java-maven-app:${env.BUILD_ID}")
+                }
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        docker.image("yjtan0819/simple-java-maven-app:${env.BUILD_ID}").push()
+                    }
+                }
+            }
+        }
     }
 }
